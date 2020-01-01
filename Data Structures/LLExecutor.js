@@ -43,20 +43,55 @@ function addToLinkedList(node, list, position = null) {
         // add in beginning 
         node.next = list;
         list = node;
-    }  
-    return list;  
+    }
+    return list;
 }
 
 let lastNode = new LinkedListNode(15, null);
 addToLinkedList(lastNode, list);
 
 let firstNode = new LinkedListNode(5, null);
-const updatedList = addToLinkedList(firstNode, list, 1);
+let updatedList = addToLinkedList(firstNode, list, 1);
 
 console.log(updatedList);
 
 // delete from LinkedList
+function deleteFromLinkedList(value, list) {
+    if (list && value) {
+        // if the node is the first node
+        if (list.value == value) {
+            delete list.value;
+            return list.next;
+        }
 
+        let deleteFlag = false;
+        let currentNode = list;
+
+        do {
+
+            let nextNode = currentNode.next;
+            if (nextNode.value == value) {
+                deleteFlag = true;
+                delete nextNode.value;
+                currentNode.next = nextNode.next;
+                break;
+            }
+            currentNode = nextNode;
+        } while (currentNode.next != null)
+
+        if (deleteFlag) {
+            return list;
+        } else {
+            return new Error("item not found");
+        }
+    }
+}
+
+updatedList = deleteFromLinkedList(5, updatedList);
+updatedList = deleteFromLinkedList(15, updatedList);
+updatedList = deleteFromLinkedList(updatedList.next.value, updatedList);
+
+console.log(updatedList);
 
 // Insert into LinkedList
 // list node, insertedNode, position
